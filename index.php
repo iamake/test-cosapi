@@ -6,9 +6,11 @@ use TencentTH\VODApi\Constants;
 use Aws\Common\Aws;
 
 $aws = Aws::factory('config.php');
+$awsService = Aws::factory('config.service.php');
 $s3Client = $aws->get('s3');
+$s3Service = $awsService->get('s3');
 
-$TESTCASES = Constants::getTestcases($s3Client);
+$TESTCASES = Constants::getTestcases($s3Client, $s3Service);
 $testcase_key = array_key_exists('t', $_REQUEST)
   ? $_REQUEST['t']
   : NULL;
@@ -58,7 +60,7 @@ $response = $testcase !== NULL ? $testcase->execute() : NULL;
           <div class="panel-body">
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="results-results">
-                <pre style="margin:-16px;background-color:transparent;font-size:11px;"><?php print_r($response); ?></pre>
+                <pre style="margin:-16px;background-color:transparent;font-size:11px;white-space:pre-wrap"><?php print_r($response); ?></pre>
               </div>
               <div role="tabpanel" class="tab-pane" id="results-request">
                 <pre style="margin:-16px;background-color:transparent;font-size:11px;"><?php echo $source; ?></pre>

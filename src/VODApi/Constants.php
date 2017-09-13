@@ -14,16 +14,29 @@ class Constants {
   /**
    * @return Testcase[]
    */
-  public static function getTestcases(S3Client $s3Client) {
+  public static function getTestcases(S3Client $s3Client, S3Client $s3Service) {
     return [
       'listBuckets' => new Testcase(
         'listBuckets',
-        function () use ($s3Client) {
+        function () use ($s3Service) {
           return [
-            'objects' => $s3Client->listBuckets('test-1252569596'),
+            'objects' => $s3Service->listBuckets('test-1252569596'),
           ];
         },
         FALSE
+      ),
+      'createPresignedUrl' => new Testcase(
+        'createPresignedUrl',
+        function () use ($s3Client) {
+          $command = $s3Client->getCommand('GetObject', [
+            'Bucket' => 'test-1252569596',
+            'Key' => 'result.txt',
+          ]);
+          return [
+            'url' => $command->createPresignedUrl('+10 minutes'),
+          ];
+        },
+        TRUE
       ),
       'getObjectUrl' => new Testcase(
         'getObjectUrl',
