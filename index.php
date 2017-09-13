@@ -60,7 +60,12 @@ $response = $testcase !== NULL ? $testcase->execute() : NULL;
           <div class="panel-body">
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="results-results">
-                <pre style="margin:-16px;background-color:transparent;font-size:11px;white-space:pre-wrap"><?php print_r($response); ?></pre>
+                <?php if ($testcase->lastException): ?>
+                  <h3 style="margin:0;">ERROR !</h3>
+                  <?php var_dump($testcase->lastException); ?>
+                <?php else: ?>
+                  <pre style="margin:-16px;background-color:transparent;font-size:11px;white-space:pre-wrap"><?php print_r($response); ?></pre>
+                <?php endif; ?>
               </div>
               <div role="tabpanel" class="tab-pane" id="results-request">
                 <pre style="margin:-16px;background-color:transparent;font-size:11px;"><?php echo $source; ?></pre>
@@ -68,6 +73,18 @@ $response = $testcase !== NULL ? $testcase->execute() : NULL;
             </div>
           </div>
         </div>
+
+        <?php if ($testcase->note): ?>
+          <div class="panel <?php echo $testcase->pass ? "panel-default" : "panel-danger"; ?>">
+            <div class="panel-heading">
+              Note
+              <?php if (!$testcase->pass): ?>
+                <span class="label label-danger">FAILED</span>
+              <?php endif; ?>
+            </div>
+            <div class="panel-body"><?php echo nl2br(htmlspecialchars($testcase->note)); ?></div>
+          </div>
+        <?php endif; ?>
       <?php else: ?>
         <div class="alert alert-info" style="margin-top:16px;">Please select a test case from the menu</div>
       <?php endif; ?>

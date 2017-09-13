@@ -6,14 +6,25 @@ class Testcase {
   public $title;
   public $func;
   public $pass;
+  public $note;
 
-  public function __construct($title, $func, $pass) {
+  /** @var \Exception $lastException */
+  public $lastException;
+
+  public function __construct($title, $func, $pass, $note = NULL) {
     $this->title = $title;
     $this->func = $func;
     $this->pass = $pass;
+    $this->note = $note;
   }
 
   public function execute() {
-    return ($this->func)();
+    try {
+      return ($this->func)();
+    }
+    catch (\Exception $e) {
+      $this->lastException = $e;
+      return 'NULL';
+    }
   }
 }
