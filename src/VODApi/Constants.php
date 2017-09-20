@@ -81,20 +81,6 @@ class Constants {
         FALSE,
         'Expect standard AWS S3 method'
       ),
-      'putObject' => new Testcase(
-        'Put an Object',
-        function () use ($s3Client) {
-          return [
-            'results' => $s3Client->putObject([
-              'Bucket' => 'test-1252569596',
-              'Key' => 'test-create-object.txt',
-              'Body' => '123456789012345678901234567890',
-            ]),
-          ];
-        },
-        FALSE,
-        'Expect exception or error messages when put the duplicated file'
-      ),
       'upload-1kb' => new Testcase(
         'Upload <1 KB',
         function () use ($s3Client) {
@@ -151,6 +137,20 @@ class Constants {
         FALSE,
         'Expect error message when uploading duplicated filename'
       ),
+      'putObject' => new Testcase(
+        'Put an Object',
+        function () use ($s3Client) {
+          return [
+            'results' => $s3Client->putObject([
+              'Bucket' => 'test-1252569596',
+              'Key' => 'test-create-object.txt',
+              'Body' => '123456789012345678901234567890',
+            ]),
+          ];
+        },
+        FALSE,
+        'Expect exception or error messages when put the duplicated file'
+      ),
       'getObject' => new Testcase(
         'Get an Object',
         function () use ($s3Client) {
@@ -179,7 +179,7 @@ class Constants {
           ];
         },
         FALSE,
-        'Expect exception or error messages when put the duplicated file'
+        'Expect exception or error messages when removing non existing file'
       ),
     ];
   }
