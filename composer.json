@@ -1,7 +1,7 @@
 {
   "name": "tencent-th/vodapi",
   "require": {
-    "aws/aws-sdk-php": "^2"
+    "qcloud/cos-sdk-v5": "^1.1"
   },
   "autoload": {
     "psr-4": {

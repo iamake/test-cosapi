@@ -3,14 +3,8 @@
 include "vendor/autoload.php";
 
 use TencentTH\VODApi\Constants;
-use Aws\Common\Aws;
 
-$aws = Aws::factory('config.php');
-$awsService = Aws::factory('config.service.php');
-$s3Client = $aws->get('s3');
-$s3Service = $awsService->get('s3');
-
-$TESTCASES = Constants::getTestcases($s3Client, $s3Service);
+$TESTCASES = Constants::getTestcases();
 $testcase_key = array_key_exists('t', $_REQUEST)
   ? $_REQUEST['t']
   : NULL;
